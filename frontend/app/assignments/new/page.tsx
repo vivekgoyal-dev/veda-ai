@@ -69,15 +69,20 @@ export default function NewAssignmentPage() {
   const router = useRouter();
   const upsert = useAssignmentStore((s) => s.upsert);
 
-  const [form, setForm] = useState<FormState>({
-    title: "Quiz on Electricity",
-    subject: "Science",
-    className: "Grade 8",
-    dueDate: "",
-    uploadedMaterial: "",
-    uploadedMaterialName: "",
-    additionalInstructions: "",
-    questionTypes: DEFAULT_ROWS,
+  const [form, setForm] = useState<FormState>(() => {
+    const d = new Date();
+    d.setDate(d.getDate() + 7);
+    const iso = d.toISOString().slice(0, 10);
+    return {
+      title: "Quiz on Electricity",
+      subject: "Science",
+      className: "Grade 8",
+      dueDate: iso,
+      uploadedMaterial: "",
+      uploadedMaterialName: "",
+      additionalInstructions: "",
+      questionTypes: DEFAULT_ROWS,
+    };
   });
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);

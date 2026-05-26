@@ -63,7 +63,7 @@ export function AssignmentCard({ a }: { a: Assignment }) {
           onView();
         }
       }}
-      className="card flex cursor-pointer flex-col gap-4 p-5 transition-shadow hover:shadow-md"
+      className="card flex cursor-pointer flex-col gap-3 p-5 transition-all hover:-translate-y-0.5 hover:shadow-md"
     >
       <div className="flex items-start justify-between gap-3">
         <h3 className="text-[15px] font-semibold leading-snug text-foreground line-clamp-2">
@@ -99,7 +99,8 @@ export function AssignmentCard({ a }: { a: Assignment }) {
               <button
                 type="button"
                 onClick={onDelete}
-                className="block w-full px-3 py-2 text-left text-sm text-red-600 hover:bg-red-50"
+                className="block w-full px-3 py-2 text-left text-sm font-medium hover:bg-red-50"
+                style={{ color: "var(--difficulty-hard)" }}
               >
                 Delete
               </button>
@@ -116,13 +117,21 @@ export function AssignmentCard({ a }: { a: Assignment }) {
         </span>
       </div>
 
-      <div className="flex flex-wrap items-center justify-between gap-3 pt-2 text-[12px] text-[color:var(--foreground-muted)]">
-        <span>
-          Assigned on : <span className="font-medium text-foreground">{safeFormat(a.createdAt)}</span>
-        </span>
-        <span>
-          Due : <span className="font-medium text-foreground">{safeFormat(a.dueDate)}</span>
-        </span>
+      <div className="mt-1 border-t border-border pt-3">
+        <div className="flex flex-wrap items-center justify-between gap-3 text-[12px] text-[color:var(--foreground-muted)]">
+          <span>
+            Assigned on :{" "}
+            <span className="font-medium text-foreground">
+              {safeFormat(a.createdAt)}
+            </span>
+          </span>
+          <span>
+            Due :{" "}
+            <span className="font-medium text-foreground">
+              {safeFormat(a.dueDate)}
+            </span>
+          </span>
+        </div>
       </div>
     </div>
   );

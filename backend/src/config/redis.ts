@@ -4,7 +4,21 @@ import { env } from "./env";
 export const redisConnection = new IORedis(env.redisUrl, {
   maxRetriesPerRequest: null,
   enableReadyCheck: false,
+  retryStrategy: (times) => Math.min(times * 200, 5000),
+  reconnectOnError: () => true,
 });
 
-redisConnection.on("connect", () => console.log("[redis] connected"));
-redisConnection.on("error", (err) => console.error("[redis] error", err.message));
+let connectedOnce = false;
+redisConnection.on("connect", () => {
+  if (!connectedOnce) {
+    console.log("[redis] connected");
+    connectedOnce = true;
+  }
+});
+redisConnection.on("error", (err) => {
+  const msg = err.message || "";
+  if (msg.includes("ETIMEDOUT") || msg.includes("EADDRNOTAVAIL")) {
+    return;
+  }
+  console.error("[redis] error", msg);
+});

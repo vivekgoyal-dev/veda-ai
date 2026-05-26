@@ -13,13 +13,13 @@ export function Topbar({ title = "Assignment", backHref, showBack = true }: Topb
   const router = useRouter();
 
   return (
-    <header className="flex h-16 items-center justify-between gap-4 border-b border-border bg-surface px-6">
+    <header className="flex h-16 items-center justify-between gap-4 border-b border-border bg-surface px-4 pl-16 md:px-6 md:pl-6">
       <div className="flex items-center gap-3">
         {showBack && (
           <button
             type="button"
             onClick={() => (backHref ? router.push(backHref) : router.back())}
-            className="flex h-9 w-9 items-center justify-center rounded-full hover:bg-surface-muted"
+            className="hidden h-9 w-9 items-center justify-center rounded-full hover:bg-surface-muted sm:flex"
             aria-label="Back"
           >
             <ArrowLeft className="h-4 w-4" strokeWidth={2} />

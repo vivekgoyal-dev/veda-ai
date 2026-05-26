@@ -10,7 +10,7 @@ import { useAssignmentStore } from "@/store/useAssignmentStore";
 
 export default function AssignmentsPage() {
   const router = useRouter();
-  const { items, loading, error, fetch } = useAssignmentStore();
+  const { items, loading, hasFetched, error, fetch } = useAssignmentStore();
   const [query, setQuery] = useState("");
   const [filter, setFilter] = useState<string>("all");
 
@@ -31,11 +31,16 @@ export default function AssignmentsPage() {
     });
   }, [items, query, filter]);
 
-  const isEmpty = !loading && items.length === 0 && !error;
+  const isInitialLoading = !hasFetched && loading;
+  const isEmpty = hasFetched && items.length === 0 && !error;
 
   return (
-    <AppShell title="Assignment" showBack>
-      {isEmpty ? (
+    <AppShell title="Assignment" showBack={false}>
+      {isInitialLoading ? (
+        <div className="flex h-[calc(100vh-9rem)] items-center justify-center">
+          <div className="h-8 w-8 animate-spin rounded-full border-2 border-border border-t-[color:var(--accent)]" />
+        </div>
+      ) : isEmpty ? (
         <EmptyState />
       ) : (
         <div className="relative p-6 pb-24">

@@ -14,5 +14,5 @@ export const env = {
   mongoUri: required("MONGODB_URI", process.env.MONGODB_URI),
   redisUrl: required("REDIS_URL", process.env.REDIS_URL),
   geminiApiKey: required("GEMINI_API_KEY", process.env.GEMINI_API_KEY),
-  geminiModel: process.env.GEMINI_MODEL ?? "gemini-2.0-flash-exp",
+  geminiModel: process.env.GEMINI_MODEL ?? "gemini-2.5-flash",
 };

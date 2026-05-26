@@ -7,6 +7,7 @@ import { api } from "@/lib/api";
 interface AssignmentState {
   items: Assignment[];
   loading: boolean;
+  hasFetched: boolean;
   error: string | null;
   fetch: () => Promise<void>;
   upsert: (item: Assignment) => void;
@@ -17,15 +18,16 @@ interface AssignmentState {
 export const useAssignmentStore = create<AssignmentState>((set) => ({
   items: [],
   loading: false,
+  hasFetched: false,
   error: null,
   fetch: async () => {
     set({ loading: true, error: null });
     try {
       const res = await api.listAssignments();
-      set({ items: res.items, loading: false });
+      set({ items: res.items, loading: false, hasFetched: true });
     } catch (e) {
       const err = e as Error;
-      set({ error: err.message, loading: false });
+      set({ error: err.message, loading: false, hasFetched: true });
     }
   },
   upsert: (item) =>
