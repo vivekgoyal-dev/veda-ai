@@ -32,7 +32,9 @@ async function main() {
   const httpServer = createServer(app);
   initSocket(httpServer);
 
-  if (env.nodeEnv !== "production") {
+  // Run the BullMQ worker in-process unless explicitly disabled
+  // (set WORKER_DISABLED=true if running a dedicated worker service)
+  if (process.env.WORKER_DISABLED !== "true") {
     startGenerationWorker();
   }
 
