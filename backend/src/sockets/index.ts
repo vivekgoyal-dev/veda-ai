@@ -5,10 +5,15 @@ import { env } from "../config/env";
 let io: IOServer | null = null;
 
 export function initSocket(httpServer: HttpServer): IOServer {
+  const corsOrigin =
+    env.corsOrigin.trim() === "*"
+      ? "*"
+      : env.corsOrigin.split(",").map((s) => s.trim());
   io = new IOServer(httpServer, {
     cors: {
-      origin: env.corsOrigin.split(",").map((s) => s.trim()),
+      origin: corsOrigin,
       methods: ["GET", "POST"],
+      credentials: corsOrigin !== "*",
     },
   });
 
